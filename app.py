@@ -25,7 +25,7 @@ def bookdemo():
 
 @app.route("/sql")
 def des_sql():
-    return (str(SQLservice.Sql_db().describe()))
+    return (str(SQLservice.SQL_db().describe()))
 
 @app.route("/bookinfo")
 def book_list():

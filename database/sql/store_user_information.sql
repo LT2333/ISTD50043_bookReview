@@ -1,10 +1,26 @@
-DROP TABLE IF EXISTS "accounts";
-DROP SEQUENCE IF EXISTS accounts_id_seq;
-CREATE SEQUENCE accounts_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1;
+CREATE DATABASE IF NOT EXISTS accounts_info;
 
-CREATE TABLE "public"."accounts" (
-    "id" integer DEFAULT nextval('accounts_id_seq') NOT NULL,
-    "username" character varying NOT NULL,
-    "password" character varying NOT NULL,
-    CONSTRAINT "accounts_username" PRIMARY KEY ("username")
-) WITH (oids = false);
+USE accounts_info;
+
+DROP TABLE IF EXISTS accounts;
+
+CREATE TABLE accounts(
+    username VARCHAR(30) NOT NULL PRIMARY KEY,
+    password VARCHAR(30) NOT NULL
+);
+
+-- INSERT INTO accounts(username,password)
+-- VALUES
+-- ('test1','lalalala'),
+-- ('Ainul','123456'),
+-- ('Jiankun','123456'),
+-- ('Pengfei','123456'),
+-- ('Yunyi','123456'),
+-- ('Shanshan','123456'),
+-- ('Nashita','123456'),
+-- ('Lutong','123456')
+-- ;
+
+
+
+

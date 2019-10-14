@@ -4,7 +4,6 @@ import copy
 # TODO 1: Add database name as env var
 
 
-
 DATABASE="kindle_reviews"
 
 class SQL_db:
@@ -45,7 +44,7 @@ class SQL_db:
     
 
     #TODO 2: There should be constraints on insertion once we decided primary key
-    def add_review(self,asin,overall,reviewText,idx=None,helpful=None,reviewTime=None,reviewerID=None,reviewerName=None,summary=None, unixReviewTime=None):
+    def add_review(self,asin,overall,reviewText=None,helpful=None,reviewTime=None,reviewerID=None,reviewerName=None,summary=None, unixReviewTime=None):
         cursor = self.conn.cursor()
         idx = self.count +1
         inputs = {'idx':idx,'asin':asin,'helpful':helpful, 'overall':overall, 'reviewText':reviewText, 'reviewTime':reviewTime, 'reviewID':reviewerID, 'reviewerName':reviewerName, 'summary':summary, 'unixReviewTime':unixReviewTime}
@@ -86,18 +85,6 @@ class SQL_db:
         return res
 
 
-    def get_review(self,asinID):
-        cursor = self.conn.cursor()
-        cursor.execute("select reviewerName,summary,overall,reviewTime from reviews where asin = %(asin)s;", {'asin':asinID})
-        res=cursor.fetchall()
-        return res
-
-
-test = SQL_db()
-test.describe()
-
-print(test.get_review('B00LE4Q95G'))
-
 
 # Example for using this class: 
 
@@ -105,4 +92,4 @@ print(test.get_review('B00LE4Q95G'))
 
 # print(test.add_review(idx=26356,asin='tfdt11re89',overall=4,reviewText='test lalala',summary='this is a summary'))
 
-# print(test.get_review(asin='tfdt11re89'))
+# print(test.get_review(asin='B00LE4Q95G'))
