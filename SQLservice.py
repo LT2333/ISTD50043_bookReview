@@ -8,7 +8,7 @@ DATABASE="kindle_reviews"
 
 class SQL_db:
     def __init__(self):
-        self.conn=db.connect(host="localhost",user="root",password="",db=DATABASE)
+        self.conn=db.connect(host="localhost",user="root",password="19650531",db=DATABASE)
         self.get_num_entires()
 
     
@@ -34,9 +34,16 @@ class SQL_db:
     output field :  
     idx,asin,helpful, overall, reviewText, reviewTime, reviewerID, reviewerName, summary, unixReviewTime,
     '''
-    def get_review(self,asin='B00LE4Q95G'):
+    def get_review(self,asin):
         cursor = self.conn.cursor()
-        cursor.execute("""select reviewerName,overall,reviewText,reviewTime from reviews where asin = %(asin)s;""",{"asin":asin})
+        cursor.execute("""select title,reviewerName,overall,reviewText,reviewTime from reviews where asin = %(asin)s;""",{"asin":asin})
+        
+        res=cursor.fetchall()
+        return res
+
+    def get_review_title(self,title):
+        cursor = self.conn.cursor()
+        cursor.execute("""select title,reviewerName,overall,reviewText,reviewTime from reviews where title = %(title)s;""",{"title":title})
         
         res=cursor.fetchall()
         return res
@@ -44,10 +51,10 @@ class SQL_db:
     
 
     #TODO 2: There should be constraints on insertion once we decided primary key
-    def add_review(self,asin,overall,reviewText=None,helpful=None,reviewTime=None,reviewerID=None,reviewerName=None,summary=None, unixReviewTime=None):
+    def add_review(self,asin,overall,title=None,reviewText=None,helpful=None,reviewTime=None,reviewerID=None,reviewerName=None,summary=None, unixReviewTime=None):
         cursor = self.conn.cursor()
         idx = self.count +1
-        inputs = {'idx':idx,'asin':asin,'helpful':helpful, 'overall':overall, 'reviewText':reviewText, 'reviewTime':reviewTime, 'reviewID':reviewerID, 'reviewerName':reviewerName, 'summary':summary, 'unixReviewTime':unixReviewTime}
+        inputs = {'idx':idx,'asin':asin,'title':title,'helpful':helpful, 'overall':overall, 'reviewText':reviewText, 'reviewTime':reviewTime, 'reviewID':reviewerID, 'reviewerName':reviewerName, 'summary':summary, 'unixReviewTime':unixReviewTime}
         new_inputs = inputs.copy()
         for i in inputs:
             if inputs[i] == None:
@@ -93,3 +100,6 @@ class SQL_db:
 # print(test.add_review(idx=26356,asin='tfdt11re89',overall=4,reviewText='test lalala',summary='this is a summary'))
 
 # print(test.get_review(asin='B00LE4Q95G'))
+# print(SQL_db().get_review('B000FA64PA'))
+
+# print(SQL_db().get_review_title("Saboteur: Star Wars Legends (Darth Maul) (Short Story) (Star Wars: Darth Maul Book 1)"))

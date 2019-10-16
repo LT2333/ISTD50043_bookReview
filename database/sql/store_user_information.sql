@@ -24,4 +24,3 @@ CREATE TABLE accounts(
 
 
 
-
