@@ -51,10 +51,10 @@ class SQL_db:
     
 
     #TODO 2: There should be constraints on insertion once we decided primary key
-    def add_review(self,asin,overall,title=None,reviewText=None,helpful=None,reviewTime=None,reviewerID=None,reviewerName=None,summary=None, unixReviewTime=None):
+    def add_review(self,asin,overall,title=None,author=None,reviewText=None,helpful=None,reviewTime=None,reviewerID=None,reviewerName=None,summary=None, unixReviewTime=None):
         cursor = self.conn.cursor()
         idx = self.count +1
-        inputs = {'idx':idx,'asin':asin,'title':title,'helpful':helpful, 'overall':overall, 'reviewText':reviewText, 'reviewTime':reviewTime, 'reviewID':reviewerID, 'reviewerName':reviewerName, 'summary':summary, 'unixReviewTime':unixReviewTime}
+        inputs = {'idx':idx,'asin':asin,'title':title,'author':author,'helpful':helpful, 'overall':overall, 'reviewText':reviewText, 'reviewTime':reviewTime, 'reviewID':reviewerID, 'reviewerName':reviewerName, 'summary':summary, 'unixReviewTime':unixReviewTime}
         new_inputs = inputs.copy()
         for i in inputs:
             if inputs[i] == None:
