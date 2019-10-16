@@ -5,7 +5,8 @@ USE accounts_info;
 DROP TABLE IF EXISTS accounts;
 
 CREATE TABLE accounts(
-    username VARCHAR(30) NOT NULL PRIMARY KEY,
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(30) NOT NULL UNIQUE,
     password VARCHAR(30) NOT NULL
 );
 

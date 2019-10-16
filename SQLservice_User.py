@@ -5,7 +5,7 @@ DATABASE="accounts_info"
 
 class SQL_User_db:
     def __init__(self):
-        self.conn=db.connect(host="localhost",user="root",password="19650531",db=DATABASE)
+        self.conn=db.connect(host="localhost",user="root",password="",db=DATABASE)
 
     def describe(self):
         cursor=self.conn.cursor()
