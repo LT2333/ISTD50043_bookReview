@@ -6,21 +6,19 @@ DROP TABLE IF EXISTS accounts;
 
 CREATE TABLE accounts(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(30) NOT NULL UNIQUE,
-    password VARCHAR(30) NOT NULL
+    username VARCHAR(32) NOT NULL UNIQUE,
+    password VARCHAR(32) NOT NULL,
+    isadmin Boolean NOT NULL
 );
 
--- INSERT INTO accounts(username,password)
--- VALUES
--- ('test1','lalalala'),
--- ('Ainul','123456'),
--- ('Jiankun','123456'),
--- ('Pengfei','123456'),
--- ('Yunyi','123456'),
--- ('Shanshan','123456'),
--- ('Nashita','123456'),
--- ('Lutong','123456')
--- ;
 
-
-
+INSERT INTO accounts(username,password,isadmin)
+VALUES
+('Ainul', MD5('123456'),1),
+('Jiankun', MD5('123456'),1),
+('Pengfei', MD5('123456'),1),
+('Yunyi', MD5('123456'),1),
+('Shanshan', MD5('123456'),1),
+('Nashita', MD5('123456'),1),
+('Lutong', MD5('123456'),1)
+;
