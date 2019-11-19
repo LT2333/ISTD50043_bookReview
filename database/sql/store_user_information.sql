@@ -20,5 +20,9 @@ VALUES
 ('Yunyi', MD5('123456'),1),
 ('Shanshan', MD5('123456'),1),
 ('Nashita', MD5('123456'),1),
-('Lutong', MD5('123456'),1)
+('Lutong', MD5('123456'),1),
+('test1',MD5('123456'),0)
 ;
+
+SELECT * FROM accounts
+LIMIT 10;

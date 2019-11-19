@@ -37,3 +37,6 @@ lines terminated by '\r\n';
 
 
 -- select idx,asin,title,author from reviews limit 10;
+
+SELECT * FROM bookinfo
+LIMIT 10;

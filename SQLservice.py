@@ -11,7 +11,7 @@ DATABASE = "kindle_reviews"
 
 class SQL_db:
     def __init__(self):
-        self.conn = db.connect(host="localhost", user="root",password="", db=DATABASE)
+        self.conn = db.connect(host="54.244.217.119", user="root",password="", db=DATABASE)
         self.get_num_entires()
 
     def describe(self):
@@ -31,7 +31,7 @@ class SQL_db:
     '''
     input field:
     Any asin number of a book in kinde_reviews.reviews
-    output field :  
+    output field:  
     idx,asin,helpful, overall, reviewText, reviewTime, reviewerID, reviewerName, summary, unixReviewTime,
     '''
 
@@ -67,8 +67,8 @@ class SQL_db:
             values({});
             """.format(clm_name, clm_value)))
 
-        cursor.execute("""insert into reviews (idx,asin,reviewText) values(27501,'ltltltltlt','test4');""")
-        self.conn.commit()
+        # cursor.execute("""insert into reviews (idx,asin,reviewText) values(27501,'ltltltltlt','test4');""")
+        # self.conn.commit()
         cursor.execute("""select * from reviews where asin = %(asin)s;""", {"asin": asin})
         res = cursor.fetchall()
         return res
