@@ -3,15 +3,13 @@ import copy
 from datetime import datetime
 import os
 
-# TODO 1: Add database name as env var
-
 
 DATABASE = "kindle_reviews"
-
+MYSQL_IP = os.environ['LC_MYSQL_IP']
 
 class SQL_db:
     def __init__(self):
-        self.conn = db.connect(host="54.244.217.119", user="root",password="", db=DATABASE)
+        self.conn = db.connect(host=MYSQL_IP, user="root", password="", db=DATABASE)
         self.get_num_entires()
 
     def describe(self):
@@ -31,7 +29,7 @@ class SQL_db:
     '''
     input field:
     Any asin number of a book in kinde_reviews.reviews
-    output field:  
+    output field :  
     idx,asin,helpful, overall, reviewText, reviewTime, reviewerID, reviewerName, summary, unixReviewTime,
     '''
 
@@ -67,15 +65,15 @@ class SQL_db:
             values({});
             """.format(clm_name, clm_value)))
 
-        # cursor.execute("""insert into reviews (idx,asin,reviewText) values(27501,'ltltltltlt','test4');""")
-        # self.conn.commit()
+        cursor.execute("""insert into reviews (idx,asin,reviewText) values(27501,'ltltltltlt','test4');""")
+        self.conn.commit()
         cursor.execute("""select * from reviews where asin = %(asin)s;""", {"asin": asin})
         res = cursor.fetchall()
         return res
 
     def get_review(self, asinID):
         cursor = self.conn.cursor()
-        cursor.execute("select reviewerName,summary,overall,reviewTime from reviews where asin = %(asin)s;",
+        cursor.execute("select reviewerName,summary,overall,reviewTime,reviewText from reviews where asin = %(asin)s;",
                        {'asin': asinID})
         res = cursor.fetchall()
         return res
@@ -101,16 +99,9 @@ class SQL_db:
 
         os.system("mysql -u root < database/sql/create_additional_tables.sql")
 
-        
-
-
-
-
 if __name__ == "__main__":
-    
+    pass
     # print(SQL_db().describe())
     # print(SQL_db().generate_additional_tables())
-    print(SQL_db().get_most_rated_books())
-    print(SQL_db().get_highest_rated_books())
-    
-    
+    # print(SQL_db().get_most_rated_books())
+    # print(SQL_db().get_highest_rated_books())

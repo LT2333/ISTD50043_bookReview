@@ -1,11 +1,28 @@
 from pymongo import MongoClient
 import time
 
+import os
+MONGO_IP = os.environ['LC_MONGO_IP']
 
 class Mg:
     def __init__(self):
-        self.con = MongoClient("mongodb://localhost:27017/")["book_metadata"]["metadata"]
-        self.log = MongoClient("mongodb://localhost:27017/")["book_log"]["log"]
+        mongo_addr = "mongodb://db_grp7_test:1234567@"+MONGO_IP+"/book_log"
+        print(mongo_addr)
+        self.con = MongoClient(mongo_addr)["book_metadata"]["metadata"]
+        self.log = MongoClient(mongo_addr)["book_log"]["log"]
+
+        # self.con = MongoClient("mongodb://db_grp7_test:1234567@3.234.153.108/book_log")["book_metadata"]["metadata"]
+        # self.log = MongoClient("mongodb://db_grp7_test:1234567@3.234.153.108/book_log")["book_log"]["log"]
+        # self.con = MongoClient("mongodb://localhost:27017/")["book_metadata"]["metadata"]
+        # self.log = MongoClient("mongodb://localhost:27017/")["book_log"]["log"]
+    
+    def get_bestsellers(self):
+        a=self.con.find({"salesRank":{'$exists': 1}})
+        #,{"asin":1,"salesRank":1}
+        ls=[]
+        for i in a:
+            ls.append(i)
+        return ls
 
     def get_all_info(self, param):
         a = self.con.find({"asin": param})
@@ -66,8 +83,29 @@ class Mg:
         pass
 
     def insert_query(self, query):
-        toInsert = {
-            'query': query,
-            'timestamp': time.time()
-        }
-        self.log.insert_one(toInsert)
+        self.log.insert_one(query)
+
+    def get_highest_rank_books(self, category):
+        categories = ["Mystery, Thriller & Suspense",
+                      "Science Fiction & Fantasy",
+                      "Action & Adventure",
+                      "Love & Romance",
+                      "Business & Money",
+                      "Health, Fitness & Dieting",
+                      "Professional & Technical",
+                      "Administration & Policy",
+                      "Dictionaries & Thesauruses",
+                      "Biographies & Memoirs"
+                      ]
+        if category not in categories:
+            raise Exception("No such category")
+        else:
+            temp = 'salesRank.'+category
+            a = self.con.find( {temp:{'$exists': True }} ).limit(10)
+            ls = [i for i in a]
+            ls.insert(0, category)
+            return ls
+    
+
+if __name__ == "__main__":
+    print(Mg().get_highest_rank_books("Dictionaries & Thesauruses"))
